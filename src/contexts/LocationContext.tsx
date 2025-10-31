@@ -1,8 +1,18 @@
 import React, { createContext, useContext, useState } from 'react';
-export const LocationContext = createContext({ location: '', setLocation: () => {} });
-export const useLocation = () => useContext(LocationContext);
+
+interface LocationContextType {
+  location: string;
+  setLocation: (loc: string) => void;
+}
+export const LocationContext = createContext<LocationContextType>({ location: '', setLocation: () => {} });
 
 export function LocationProvider({ children }) {
   const [location, setLocation] = useState('');
-  return (<LocationContext.Provider value={{ location, setLocation }}>{children}</LocationContext.Provider>);
+  return (
+    <LocationContext.Provider value={{ location, setLocation }}>
+      {children}
+    </LocationContext.Provider>
+  );
 }
+
+export const useLocation = () => useContext(LocationContext);
