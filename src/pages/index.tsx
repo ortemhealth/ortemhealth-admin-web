@@ -21,7 +21,7 @@ export default function Dashboard() {
               <EarningsChart />
             </Grid>
             <Grid item xs={12} sm={4}>
-              {/* Side panel - upcoming appts, actions */}
+              {/* Side panel: upcoming appts, quick actions */}
             </Grid>
           </Grid>
         </Box>
@@ -29,4 +29,3 @@ export default function Dashboard() {
     </Box>
   );
 }
-
