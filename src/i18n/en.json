@@ -1,1 +1,14 @@
+{
+  "dashboard": "Dashboard",
+  "appointments_title": "Appointments",
+  "save": "Save",
+  "add_patient": "Add Patient",
+  "profile_page": "Profile & Settings",
+  "login_title": "Admin Login",
+  "logout": "Logout",
+  "notifications": "Notifications",
+  "doctor_title": "Doctors",
+  "patient_title": "Patients",
+  "payments_title": "Payments & Revenue"
+}
 
