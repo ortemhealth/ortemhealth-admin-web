@@ -67,5 +67,51 @@ export default function StaffPage() {
                         >
                           <MenuItem value="Admin">Admin</MenuItem>
                           <MenuItem value="Doctor">Doctor</MenuItem>
-                          <MenuItem value
-
+                          <MenuItem value="Receptionist">Receptionist</MenuItem>
+                          <MenuItem value="Staff">Staff</MenuItem>
+                        </TextField>
+                      </TableCell>
+                      <TableCell>
+                        <Button onClick={() => handleRemove(member.id)} color="error">Remove</Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Paper>
+          </Box>
+          <Modal open={open} onClose={() => setOpen(false)}>
+            <Box sx={{
+              position: 'absolute', top: '50%', left: '50%',
+              transform: 'translate(-50%, -50%)', bgcolor: 'background.paper',
+              boxShadow: 24, p: 4, borderRadius: 2, minWidth: 320
+            }}>
+              <Typography variant="h6" mb={2}>Add New Staff Member</Typography>
+              <TextField
+                fullWidth label="Name" sx={{ mb: 2 }}
+                value={newMember.name} onChange={e => setNewMember({...newMember, name: e.target.value})}
+              />
+              <TextField
+                fullWidth label="Email" sx={{ mb: 2 }}
+                value={newMember.email} onChange={e => setNewMember({...newMember, email: e.target.value})}
+              />
+              <TextField
+                select fullWidth label="Role" sx={{ mb: 2 }}
+                value={newMember.role}
+                onChange={e => setNewMember({...newMember, role: e.target.value})}
+              >
+                <MenuItem value="Admin">Admin</MenuItem>
+                <MenuItem value="Doctor">Doctor</MenuItem>
+                <MenuItem value="Receptionist">Receptionist</MenuItem>
+                <MenuItem value="Staff">Staff</MenuItem>
+              </TextField>
+              <Button variant="contained" onClick={handleAdd} fullWidth>
+                Add
+              </Button>
+            </Box>
+          </Modal>
+        </Box>
+      </Box>
+    </Box>
+  );
+}
