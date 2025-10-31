@@ -7,8 +7,10 @@ import PaymentsIcon from '@mui/icons-material/Payments';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import SettingsIcon from '@mui/icons-material/Settings';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const menu = [
+  { text: 'Dashboard', icon: <DashboardIcon />, link: '/' },
   { text: 'Dashboard', icon: <DashboardIcon />, link: '/' },
   { text: 'Appointments', icon: <CalendarTodayIcon />, link: '/appointments' },
   { text: 'Patients', icon: <PeopleIcon />, link: '/patients' },
@@ -18,6 +20,7 @@ const menu = [
   { text: 'Analytics', icon: <AssessmentIcon />, link: '/analytics' },
   { text: 'Staff', icon: <PeopleIcon />, link: '/staff' },
   { text: 'Settings', icon: <SettingsIcon />, link: '/settings' },
+  { text: 'Profile', icon: <AccountCircleIcon />, link: '/profile' },
 ];
 
 export default function Sidebar() {
