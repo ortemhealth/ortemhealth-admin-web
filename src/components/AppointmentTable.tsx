@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material';
+import { Table, TableHead, TableRow, TableCell, TableBody, Paper, IconButton } from '@mui/material';
 import { getAppointments } from '../services/appointment';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function AppointmentTable() {
   const [appointments, setAppointments] = useState([]);
+
   useEffect(() => {
     getAppointments().then(setAppointments);
   }, []);
+
   return (
     <Paper>
       <Table>
@@ -16,6 +20,7 @@ export default function AppointmentTable() {
             <TableCell>Doctor</TableCell>
             <TableCell>Time</TableCell>
             <TableCell>Status</TableCell>
+            <TableCell>Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -25,6 +30,14 @@ export default function AppointmentTable() {
               <TableCell>{appt.doctorName}</TableCell>
               <TableCell>{appt.time}</TableCell>
               <TableCell>{appt.status}</TableCell>
+              <TableCell>
+                <IconButton color="primary" href={`/appointments/${appt.id}`}>
+                  <VisibilityIcon />
+                </IconButton>
+                <IconButton color="error">
+                  <DeleteIcon />
+                </IconButton>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -32,4 +45,3 @@ export default function AppointmentTable() {
     </Paper>
   );
 }
-
