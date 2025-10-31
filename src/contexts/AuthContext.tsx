@@ -26,3 +26,9 @@ export function useAuth() {
   return useContext(AuthContext);
 }
 
+export function getUserRole() {
+  return typeof window === "undefined" ? "" : localStorage.getItem('userRole') || "";
+}
+export function getTenantId() {
+  return typeof window === "undefined" ? "" : localStorage.getItem('tenantId') || "";
+}
