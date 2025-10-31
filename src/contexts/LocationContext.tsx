@@ -1,3 +1,4 @@
+// src/contexts/LocationContext.tsx
 import React, { createContext, useContext, useState } from 'react';
 
 interface LocationContextType {
@@ -7,7 +8,13 @@ interface LocationContextType {
 export const LocationContext = createContext<LocationContextType>({ location: '', setLocation: () => {} });
 
 export function LocationProvider({ children }) {
-  const [location, setLocation] = useState('');
+  const [location, setLocationState] = useState(localStorage.getItem('clinicLocation') || '');
+
+  const setLocation = (loc: string) => {
+    setLocationState(loc);
+    localStorage.setItem('clinicLocation', loc);
+  };
+
   return (
     <LocationContext.Provider value={{ location, setLocation }}>
       {children}
@@ -16,3 +23,8 @@ export function LocationProvider({ children }) {
 }
 
 export const useLocation = () => useContext(LocationContext);
+
+// Helper for reading location outside React (services/api)
+export function getLocation() {
+  return typeof window === "undefined" ? "" : localStorage.getItem('clinicLocation') || "";
+}
