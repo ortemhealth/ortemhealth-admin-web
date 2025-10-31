@@ -1,56 +1,47 @@
-import React, { useEffect, useState } from 'react';
-import { Table, TableHead, TableRow, TableCell, TableBody, Paper, Chip, IconButton } from '@mui/material';
-import { getPayments, refundPayment } from '../services/payment';
+import React, { useState } from 'react';
+import { Table, TableHead, TableRow, TableCell, TableBody, TableSortLabel, TablePagination, Paper, Button } from '@mui/material';
+import { CSVLink } from "react-csv";
+const tableData = [...] // fetched data
 
 export default function PaymentTable() {
-  const [payments, setPayments] = useState([]);
-
-  useEffect(() => {
-    getPayments().then(setPayments);
-  }, []);
-
-  const handleRefund = async (id: string) => {
-    await refundPayment(id);
-    setPayments(payments.map(p => p.id === id ? { ...p, status: "Refunded" } : p));
-  };
-
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('amount');
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const handleSort = (property) => { setOrder(order === 'asc' ? 'desc' : 'asc'); setOrderBy(property); };
   return (
     <Paper>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell>Patient</TableCell>
-            <TableCell>Amount</TableCell>
-            <TableCell>Date</TableCell>
-            <TableCell>Status</TableCell>
-            <TableCell>Method</TableCell>
-            <TableCell>Action</TableCell>
+            <TableCell>
+              <TableSortLabel active={orderBy === 'amount'} direction={order} onClick={() => handleSort('amount')}>
+                Amount
+              </TableSortLabel>
+            </TableCell>
+            {/* Add more TableCell with SortLabel as needed */}
           </TableRow>
         </TableHead>
         <TableBody>
-          {payments.map(payment => (
+          {/* Use filtered/sorted data */}
+          {tableData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((payment) => (
             <TableRow key={payment.id}>
-              <TableCell>{payment.id}</TableCell>
-              <TableCell>{payment.patientName}</TableCell>
-              <TableCell>₹{payment.amount}</TableCell>
-              <TableCell>{payment.date}</TableCell>
-              <TableCell>
-                <Chip label={payment.status} color={payment.status === "Paid" ? "success" : "warning"} />
-              </TableCell>
-              <TableCell>{payment.method}</TableCell>
-              <TableCell>
-                {payment.status === "Paid" && (
-                  <IconButton color="secondary" onClick={() => handleRefund(payment.id)}>
-                    Refund
-                  </IconButton>
-                )}
-              </TableCell>
+              <TableCell>{payment.amount}</TableCell>
+              {/* More cells */}
             </TableRow>
           ))}
         </TableBody>
       </Table>
+      <TablePagination
+        count={tableData.length}
+        page={page}
+        onPageChange={(e, p) => setPage(p)}
+        rowsPerPage={rowsPerPage}
+        onRowsPerPageChange={(e) => setRowsPerPage(Number(e.target.value))}
+      />
+      <Button sx={{ mt: 2 }}>
+        <CSVLink data={tableData} filename="payments.csv">Export CSV</CSVLink>
+      </Button>
     </Paper>
   );
 }
-
